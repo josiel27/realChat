@@ -1,39 +1,69 @@
 .cor-painel-principal{
-    background: rgba(56, 83, 87, 0.486);
-    border: 1px solid;
+    background: rgba(56, 83, 87, 0);
     color: white;
-    width: 108%;
-    min-width: 108%;
     position: block;
-    height: 90vh;
+    height: 82vh;
+    width: 100%;
+    padding-right: 10px;
     overflow: auto;
 }
 
-h1{
+h1, #idUser{
     text-align: center;
+}
+
+.titleChat{
+    font-size: 50px;
+    color:white;
+}
+
+.actions{
+    max-width: 3px;
+}
+
+.colorTbUser{
+    color: orange;
+}
+.colorTbDatahora{
+    color: greenyellow;
+}
+.colorTbMsg{
+    color: cyan;
+}
+.colorTbTittle{
+    color: white;
 }
 
 .padding-container{
     padding-top: 15px;
     position: absolute;
+    width: 100%;
 }
 
 body {
-    background: #eeeeee;
+    background: #3b3b3b;
     font-family: 'Roboto', sans-serif;
     /* background-image: url("../img/background.png"); */
     background-repeat: repeat;
     min-width: 330px !important;
 }
 
-.actions{
-    min-width: 70px;
-    
+
+.txtNewMsg{
+    height: 59px;
+    width: 86%;
+    bottom: 50px;
 }
 
-.textarea{
+
+.btnEnterMsg{
     resize: vertical;
-    max-height: 150px;
+    max-height: 50%;
+    height: 60px;
+    min-width: 9%;
+    position: absolute;
+    bottom: 0px;
+    right: 7%;
 }
 
 .alertClass{
@@ -50,7 +80,8 @@ center{
 }
 
 .container .jumbotron, .container-fluid .jumbotron{
-    padding-left: 6px;
+    padding-left: 15px;
+    width: 100%;
 }
 
 .sizeDesc{
@@ -61,12 +92,19 @@ center{
     position: absolute;
 }
 
-.sizeTarefa{
-    min-width: 115px;
+.sizeUser{
+    min-width: 36px;
+    max-width: 36px;
 }
 
 .sizeEntrega{
     min-width: 89px;
+    max-width: 89px;
+}
+
+.sizeDatahora{
+    font-size: 10px;
+    width: 30px;
 }
 
 .styleLoading{
@@ -81,15 +119,9 @@ center{
     width: 100%;
 }
 
-.btnGoToTop{
-    width: 100%;
-    padding: 0px;
-    height: 20px;
+.tbDataHora{
+    right: 50px;
 }
-
-
-
-
 
 .sk-circle {
     width: 40px;

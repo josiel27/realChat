@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="css\main.css">
 
   <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
 
   <!-- ionic/angularjs js -->
   <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -42,7 +42,7 @@
     -->
 
   <!-- cordova script (this will be a 404 during development) -->
-  <script src="cordova.js"></script>
+  <!-- <script src="cordova.js"></script> -->
 
   <!-- your app's js -->
   <script src="js/app.js"></script>
@@ -50,98 +50,113 @@
 
 <body>
   <ion-content>
+
     <center id="divCarregando" class="styleLoading">
-        <div class="sk-circle">
-            <div class="sk-circle1 sk-child"></div>
-            <div class="sk-circle2 sk-child"></div>
-            <div class="sk-circle3 sk-child"></div>
-            <div class="sk-circle4 sk-child"></div>
-            <div class="sk-circle5 sk-child"></div>
-            <div class="sk-circle6 sk-child"></div>
-            <div class="sk-circle7 sk-child"></div>
-            <div class="sk-circle8 sk-child"></div>
-            <div class="sk-circle9 sk-child"></div>
-            <div class="sk-circle10 sk-child"></div>
-            <div class="sk-circle11 sk-child"></div>
-            <div class="sk-circle12 sk-child"></div>
-          </div>
+      <div class="sk-circle">
+        <div class="sk-circle1 sk-child"></div>
+        <div class="sk-circle2 sk-child"></div>
+        <div class="sk-circle3 sk-child"></div>
+        <div class="sk-circle4 sk-child"></div>
+        <div class="sk-circle5 sk-child"></div>
+        <div class="sk-circle6 sk-child"></div>
+        <div class="sk-circle7 sk-child"></div>
+        <div class="sk-circle8 sk-child"></div>
+        <div class="sk-circle9 sk-child"></div>
+        <div class="sk-circle10 sk-child"></div>
+        <div class="sk-circle11 sk-child"></div>
+        <div class="sk-circle12 sk-child"></div>
+      </div>
       <br>
       <br>
       <strong>Carregando..</strong>
     </center>
     <div id="containerTabela" class="container padding-container" style="display:none">
-      <!-- INICIO DO CONTAINER COM O CRUD -->
-      <div class="row">
+
+
+      <!-- //LOGIN -->
+      <div class="row" id='formLogin'>
         <div class="col-md-offset-2 col-md-8">
-          <div class="jumbotron cor-painel-principal">
-            <h1>Chat</h1>
-            <!-- <button id="btnNovausuario" onclick="mostrarCrudusuario()" type="button" class="btn btn-primary">
-              <strong>Nova usuario</strong>
-            </button> -->
-            <!-- <form id="crudForm" name="formulario" style="display:none">
-              <div class="form-group">
-                <label for="usuario">usuario*</label>
-                <input type="text" class="form-control" id="usuario" placeholder="Nome da usuario" maxlength="20" required ng-model="usuario.usuario">
+          <div class="cor-painel-principal">
+            <form>
+              <div class="imgcontainer">
+                <img src="img/avatar.png" alt="Avatar" class="avatar">
               </div>
-              <div class="form-group">
-                <label for="usuario">Data de entrega*</label>
-                <input type="date" class="form-control" id="datahora" placeholder="Data de entrega da usuario" maxlength="20" required ng-model="usuario.datahora">
+
+              <div class="container">
+                <label for="uname">
+                  <b>Username</b>
+                </label>
+                <input id="txtAcessoUser" type="text" placeholder="Enter Username" name="uname" required>
+
+                <label for="psw">
+                  <b>Password</b>
+                </label>
+                <input id="txtAcessoPass" type="password" placeholder="Enter Password" name="psw" required>
+
+                <button ng-click="entrarSistema()" type="submit">Entrar</button>
+                <!-- <label>
+                  <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label> -->
               </div>
-              <div class="form-group has-feedback {{statusmensagem.classe}}">
-                <label for="mensagem">mensagem*</label>
-                <textarea type="textarea" class="form-control textarea" id="mensagem" placeholder="Informe a descrição da usuario" maxlength="80"
-                  required ng-model="usuario.mensagem"></textarea>
-                <span class="glyphicon form-control-feedback {{statusmensagem.icone}}" aria-hidden="true"></span>
-                <p class="help-block">{{statusmensagem.mensagem}}</p>
-              </div>
-              <button id="btnAdicionar" ng-click="cadastrar()" type="button" class="btn btn-primary">
-                <strong>Adicionar</strong>
-              </button>
-              <button id="btnSalvar" ng-click="salvarAlteracao()" type="button" class="btn btn-success" disabled>
-                <strong>Salvar</strong>
-              </button>
-              <button id="btnCancel" ng-click="cancelAlteracao()" type="button" class="btn btn-danger ">
-                <strong>Cancel</strong>
-              </button>
-            </form> -->
+
+              <!-- <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot
+                  <a href="#">password?</a>
+                </span>
+              </div> -->
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- INICIO DO CONTAINER COM O CHAT -->
+      <div class="" style="display:none" id='formChat'>
+        <div class="col-md-offset-2 col-md-8">
+          <div class="cor-painel-principal">
+            <h2 id="idUser" class="titleChat">Chat</h2>
             <hr>
-            <table class="table styleTable">
+            <table class="table">
               <thead>
                 <tr>
-                  <th class="sizeT-arefa">
+                  <th class="sizeUser colorTbTittle">
                     <strong>Usuário</strong>
                   </th>
-                  <th>
+                  <th class="colorTbTittle">
                     <strong>Mensagem</strong>
                   </th>
-                  <th>
-                    <strong>Data e Hora</strong>
+                  <th class="tbDataHora colorTbTittle">
+                    <strong>Dt/Hr</strong>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <!-- Aqui serão exibidos os dados do usuários cadastrados -->
-                <tr ng-repeat="mensagens in mensagens" id={{chat.usuario}}>
-                  <td class="actions">
-                    <strong>{{chat.usuario}} </strong>
+                <tr ng-repeat="objChat in chat" id={{objChat.usuario}}>
+                  <td class="actions sizeUser colorTbUser">
+                    <strong>{{objChat.usuario}} </strong>
                     <br>
                   </td>
-                  <td class="sizeEntrega">{{chat.mensagem}}</td>
-                  <td class="sizeEntrega">{{chat.datahora}}</td>
-                
+                  <td class="sizeEntrega colorTbMsg">{{objChat.mensagem}}</td>
+                  <td class="sizeDatahora tbDataHora colorTbDatahora">{{objChat.datahora}}</td>
                   <br>
                 </tr>
               </tbody>
             </table>
-            <!-- Botao para ir ao topo -->
-            <a class="btn btn-info btnGoToTop" onclick="goToTop()">
-              <i class="fa fa-chevron-up"></i>
-            </a>
           </div>
         </div>
+
+        <!-- Botao para ir ao topo -->
+        <input type="input" class="form-control txtNewMsg" id="mensagem" placeholder="Digite uma mensagem" maxlength="80">
+        </input>
+        <a class="btn btn-info btnEnterMsg" ng-click="enviarMensagem()">
+          <i class="fa fa-chevron-right"></i>
+        </a>
+
       </div>
-      <center>Josiel Faria</center>
+      <!-- <center>Josiel Faria</center> -->
     </div>
+
 
     <!-- FEEDS -->
   </ion-content>
@@ -149,16 +164,6 @@
   <div id="feedError" class="alert alert-danger alertClass" style="display:none"></div>
   <div id="feedAlert" class="alert alert-warning alertClass" style="display:none"></div>
   <script type="text/javascript" src="js/main.js"></script>
-
-  <!-- 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-   -->
 </body>
 
 </html>

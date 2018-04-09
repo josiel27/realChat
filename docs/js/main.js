@@ -3,24 +3,24 @@
 var config = {
     apiKey: "AIzaSyBWpUQ7MGjCFkT3tFv1mLBU0PKxaC1V0jA",
     authDomain: "realchat-493cf.firebaseapp.com",
-    datahorabaseURL: "https://realchat-493cf.firebaseio.com",
+    databaseURL: "https://realchat-493cf.firebaseio.com",
     projectId: "realchat-493cf",
     storageBucket: "realchat-493cf.appspot.com",
     messagingSenderId: "199166590696"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
 let feedSuccess = $("#feedSuccess");
 let feedError = $("#feedError");
 let feedAlert = $("#feedAlert");
 
 //funcao que faz a inserção no Banco do FIREBASE
-function salvar() {
-    let usuario = document.getElementById("usuario").value;
+function salvar(usuario) {
+    // let usuario = document.getElementById("usuario").value;
     let mensagem = document.getElementById("mensagem").value;
-    var datahora = document.getElementById("datahora").value;
+    var datahora = new Date().getTime();
 
-    if (usuario != "" && mensagem != "" && datahora != "") {
+    if (usuario != "" && mensagem != "" ) {
         let texto = {//JSON
             "usuario": usuario,
             "mensagem": mensagem,
@@ -28,7 +28,7 @@ function salvar() {
         };
         try {
             var content = {};
-            content['/chat/' + usuario] = texto;
+            content['/chat/'+datahora ] = texto;
             retorno = firebase.database().ref().update(content);
             mostraFeed('success', 'usuario adicionada!');
             return retorno;
@@ -36,6 +36,12 @@ function salvar() {
             mostraFeed('error', 'Erro ao adicionar usuario!');
         }
     }
+}
+
+//troca o formulario de login pelo o de chat
+function acessar(){
+    $('#formLogin').hide();
+    $('#formChat').show();
 }
 
 //funcao que faz a exclusao no Banco do FIREBASE
