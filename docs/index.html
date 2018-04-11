@@ -49,8 +49,8 @@
 </head>
 
 <body>
+  <center>
   <ion-content>
-
     <center id="divCarregando" class="styleLoading">
       <div class="sk-circle">
         <div class="sk-circle1 sk-child"></div>
@@ -81,30 +81,43 @@
               <div class="imgcontainer">
                 <img src="img/avatar.png" alt="Avatar" class="avatar">
               </div>
-
               <div class="">
                 <label for="uname">
                   <b>Username</b>
                 </label>
-                <input id="txtAcessoUser" type="text" placeholder="Enter Username" name="uname" required>
-
+                <input id="txtAcessoUser" type="text" placeholder="Digite o seu usuário" name="uname" required>
                 <label for="psw">
                   <b>Password</b>
                 </label>
-                <input id="txtAcessoPass" type="password" placeholder="Enter Password" name="psw" required>
-
+                <input id="txtAcessoPass" type="password" placeholder="Digite a sua senha" name="psw" required>
                 <button ng-click="entrarSistema()" type="submit">Entrar</button>
-                <!-- <label>
-                  <input type="checkbox" checked="checked" name="remember"> Remember me
-                </label> -->
               </div>
+                <button class="btn-info" ng-click="acessarTelaNovoUsuario()" type="submit">Registrar Usuário</button>
+            </form>
+          </div>
+        </div>
+      </div>
 
-              <!-- <div class="container" style="background-color:#f1f1f1">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <span class="psw">Forgot
-                  <a href="#">password?</a>
-                </span>
-              </div> -->
+      <!-- //REGISTRAR USER -->
+      <div class="row" id='formRegister' style="display:none">
+        <div class="col-md-offset-2 col-md-8">
+          <div class="cor-painel-principal">
+            <form>
+              <div class="imgcontainer">
+                <img src="img/avatar.png" alt="Avatar" class="avatar">
+              </div>
+              <div class="">
+                <label for="">
+                  <b>Novo usuário</b>
+                </label>
+                <input id="txtNewUser" type="text" placeholder="Digite o nome do novo usuário" name="uname" required>
+                <label for="">
+                  <b>Password</b>
+                </label>
+                <input id="txtNewPass" type="password" placeholder="Digite uma senha" name="psw" required>
+                <button class="btn-info" ng-click="registrarUsuario()" type="submit">Salvar Usuário</button>
+              </div>
+              <button class="btn-danger" onclick="goToLogin()" type="submit">Cancelar</button>
             </form>
           </div>
         </div>
@@ -130,7 +143,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="tbody">
                 <!-- Aqui serão exibidos os dados do usuários cadastrados -->
                 <tr ng-repeat="objChat in chat" id={{objChat.usuario}}>
                   <td class="actions sizeUser colorTbUser">
@@ -143,16 +156,27 @@
                 </tr>
               </tbody>
             </table>
+            <a name="ancoraBot"> </a>
           </div>
         </div>
 
-        <!-- Botao para ir ao topo -->
-        <input type="input" class="form-control txtNewMsg" id="mensagem" placeholder="Digite uma mensagem" maxlength="80">
-        </input>
-        <a class="btn btn-info btnEnterMsg" ng-click="enviarMensagem()">
-          <i class="fa fa-chevron-right"></i>
-        </a>
+        
 
+        <!-- Elementos para enviar mensgem -->
+        <form>
+          <table>
+            <td>
+              <input type="input" class="form-control txtNewMsg" id="mensagem" placeholder="Digite uma mensagem"  onclick="goToTop()" maxlength="80">
+              </input>
+            </td>
+            <td>
+              <button  type="submit" class="btn btn-info btnEnterMsg" ng-click="enviarMensagem()" >
+                <i class="fa fa-chevron-right"></i>
+              </button>
+            </td>
+          </table>
+
+        </form>
       </div>
       <!-- <center>Josiel Faria</center> -->
     </div>
@@ -160,6 +184,7 @@
 
     <!-- FEEDS -->
   </ion-content>
+</center> 
   <div id="feedSuccess" class="alert alert-success alertClass" style="display:none"></div>
   <div id="feedError" class="alert alert-danger alertClass" style="display:none"></div>
   <div id="feedAlert" class="alert alert-warning alertClass" style="display:none"></div>

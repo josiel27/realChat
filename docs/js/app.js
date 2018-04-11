@@ -31,7 +31,7 @@ angular.module('starter', ['ionic'])
         $scope.usuario = { usuario: '', mensagem: '' /*, datahora: '' */ };
 
         //método para adicionar o usuário a lista
-        $scope.enviarMensagem = function () {
+        $scope.enviarMensagem = function () {            
             var txtUsuario = $scope.acesso.usuario;
             var txtMensagem = $('#mensagem').val();
 
@@ -44,7 +44,6 @@ angular.module('starter', ['ionic'])
                 document.getElementById('mensagem').value = "";//apaga o campo de texto após enviar a msg
             }
         };
-
 
         //método para acessar o sistema
         $scope.entrarSistema = function () {
@@ -62,7 +61,6 @@ angular.module('starter', ['ionic'])
                 textRef.once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var value = childSnapshot.val();
-                        console.log('aqui..')
                         if (value.usuario == txtAcessoUser && value.senha == txtAcessoPass) {
                             $scope.acesso = { usuario: txtAcessoUser };
                             encontrouUser = true;
@@ -80,70 +78,25 @@ angular.module('starter', ['ionic'])
                 })
             }
         }
+        
+        //metodo para acessa tela de novo usuario
+        $scope.acessarTelaNovoUsuario = function () {
+            $('#formLogin').hide();
+            $('#formRegister').show();
+        }
 
-        $scope.deletar = function (nomeusuario) {
-            //remover da tabela
-            $scope.chat.forEach(function (e) {
-                if (e.usuario == nomeusuario) {
-                    $('#' + nomeusuario).remove();
-                }
-            });
-            remover(nomeusuario);//funcao do main.js para fazer a exclusao no firebase
-        };
+        //metodo para registrar um novo usuario
+        $scope.registrarUsuario = function () {
+            var txtNewUser = $('#txtNewUser').val();
+            var txtNewPass = $('#txtNewPass').val();
 
-        $scope.alterar = function (nomeusuario, descusuario, datahoraEntrega) {
-            goToTop(); setFocususuario();
-            $scope.nomeAlterado = nomeusuario;
-            //desabilitando e habilitando botoes
-            $('#btnSalvar').removeAttr('disabled');
-
-            $('#btnAdicionar').attr('disabled', '');
-            let dtEntrega = '';
-
-            //scope que recebeu do bd o valor correto para passar para o input
-            $scope.datahoraOrigin.forEach(function (e) {
-                if (e.usuario == nomeusuario) { dtEntrega = e.datahora; }
-            });
-
-            //formatando datahora para string
-            var datahora = new Date(dtEntrega);
-            var day = datahora.getDate() + 1;
-            var month = datahora.getMonth() + 1;
-            var year = datahora.getFullYear();
-            var datahoraFinal = year + "-" + month + "-" + day;
-
-            //recebendo da tabelas os dados para alteracao
-            $scope.usuario = { usuario: nomeusuario, mensagem: descusuario, datahora: new Date(datahoraFinal) };
-
-            mostrarCrudusuario();//funcao para mostrar os campos de insercao e alteracao
-        };
-
-        $scope.salvarAlteracao = function () {
-            var usuario = $('#usuario').val();
-            var mensagem = $('#mensagem').val();
-            var datahora = $('#datahora').val();
-
-            if (usuario == '' || mensagem == '' || datahora == "") {
-                mostraFeed('alert', 'Preenchar todos os campos para adicionar usuario!');
+            if (txtNewUser == '' || txtNewPass == '') {
+                mostraFeed('alert', 'Preencha todos os campos para adicionar um novo usuário!');
             } else {
-                update($scope.nomeAlterado);//funcao para update no banco de dados
-                let usuario = $scope.nomeAlterado;
-
-                //desabilitando e habilitando botoes
-                $('#btnSalvar').attr('disabled', '');
-                $('#btnAdicionar').removeAttr('disabled', '');
-                $scope.chat = [];
-                $scope.atualizar();
+                salvarNovoUsuario();//funcao do main.js para fazer a inserção no firebase
             }
-        };
 
-        $scope.cancelAlteracao = function (nomeusuario, descusuario, datahoraEntrega) {
-            $scope.usuario = { usuario: '', mensagem: '', datahora: '' };
-            //desabilitando e habilitando botoes
-            $('#btnSalvar').attr('disabled', '');
-            $('#btnAdicionar').removeAttr('disabled', '');
-            esconderCrudusuario();//funcao para esconder os campos de insercao e alteracao
-        };
+        }
 
         //funcoes para esconder e mostra loading e tabela
         $scope.mostrarTabela = function () {
@@ -170,7 +123,7 @@ angular.module('starter', ['ionic'])
 
                     //formantando datahora
                     var datahoraAtt = new Date(value.datahora);
-                    var dayAtt = datahoraAtt.getDate() + 1;
+                    var dayAtt = datahoraAtt.getDate();
                     dayAtt = ("00" + dayAtt).slice(-2);
                     var monthAtt = datahoraAtt.getMonth() + 1;
                     monthAtt = ("00" + monthAtt).slice(-2);
@@ -184,10 +137,10 @@ angular.module('starter', ['ionic'])
                     $scope.usuario = { usuario: value.usuario, mensagem: value.mensagem, datahora: datahoraFinalAtt };
                     $scope.chat.push($scope.usuario);
                 });
-
                 $scope.mostrarTabela();
                 $scope.$apply();
             });
+            goToDown();
         };
 
         function carregarChat() {

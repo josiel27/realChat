@@ -20,7 +20,7 @@ function salvar(usuario) {
     let mensagem = document.getElementById("mensagem").value;
     var datahora = new Date().getTime();
 
-    if (usuario != "" && mensagem != "" ) {
+    if (usuario != "" && mensagem != "") {
         let texto = {//JSON
             "usuario": usuario,
             "mensagem": mensagem,
@@ -28,7 +28,7 @@ function salvar(usuario) {
         };
         try {
             var content = {};
-            content['/chat/'+datahora ] = texto;
+            content['/chat/' + datahora] = texto;
             retorno = firebase.database().ref().update(content);
             mostraFeed('success', 'usuario adicionada!');
             return retorno;
@@ -38,8 +38,65 @@ function salvar(usuario) {
     }
 }
 
+//funcao que faz a inserção no Banco do FIREBASE
+function salvarFirebase() {
+    var txtNewUser = $('#txtNewUser').val();
+    var txtNewPass = $('#txtNewPass').val();
+
+    if (txtNewUser != "" && txtNewPass != "") {
+        let texto = {//JSON
+            "usuario": txtNewUser,
+            "senha": txtNewPass,
+        };
+        try {
+            var content = {};
+            content['/acesso/' + txtNewUser] = texto;
+            retorno = firebase.database().ref();
+            retorno.update(content);
+            mostraFeed('success', 'Usuario adicionado!');
+            document.getElementById('txtNewUser').value = "";//apaga o campo de texto
+            document.getElementById('txtNewPass').value = "";//apaga o campo de texto
+            goToLogin(); // volta para a tela de login
+            return retorno;
+        } catch (error) {
+            mostraFeed('error', 'Erro ao adicionar usuario!');
+        }
+    }
+}
+
+//antes de salvar faz o teste se o usuario já existe no sistema
+salvarNovoUsuario = () => {
+    var txtNewUser = $('#txtNewUser').val();
+    var textRef = firebase.database().ref('acesso');
+    var value = "";
+    var usuarioExistente = false;
+    textRef.once('value', function (snapshot) {
+        contador = snapshot.numChildren();
+        snapshot.forEach(function (childSnapshot) {
+            value = childSnapshot.val();
+            if (value.usuario == txtNewUser) {
+                usuarioExistente = true;
+            }
+        });
+        if (!usuarioExistente) {
+            salvarFirebase();
+        } else {
+            mostraFeed('error', 'Usuário existente!');
+            document.getElementById('txtNewPass').value = "";//apaga o campo de texto
+        }
+    })
+}
+
+//vai para tela de login
+goToLogin = () => {
+    $('#formRegister').hide();
+    $('#formLogin').show();
+    document.getElementById('txtAcessoUser').value = "";//apaga o campo de texto
+    document.getElementById('txtAcessoPass').value = "";//apaga o campo de texto
+}
+
 //troca o formulario de login pelo o de chat
-function acessar(){
+function acessar() {
     $('#formLogin').hide();
     $('#formChat').show();
 }
@@ -62,34 +119,15 @@ function remover(nomeusuario) {
     }
 }
 
-//funcao que faz a alteracao no Banco do FIREBASE
-function update(nomeAlterado) {
-    var usuario = $('#usuario').val();
-    var mensagem = $('#mensagem').val();
-    var datahora = $('#datahora').val();
-
-    if (usuario != "" && mensagem != "" && datahora != "") {
-        let texto = {//JSON
-            "usuario": usuario,
-            "mensagem": mensagem,
-            "datahora": datahora
-        };
-        try {
-            var content = {};
-            content['/chat/' + nomeAlterado] = {};
-            content['/chat/' + usuario] = texto;
-            retorno = firebase.database().ref().update(content);
-            mostraFeed('success', 'usuario foi alterada!');
-            return retorno;
-        } catch (error) {
-            mostraFeed('error', 'Erro ao alterar usuario!');
-        }
-    }
-}
-
 // indo para o top
 function goToTop() {
-    $('html, body, ion-content').animate({ scrollTop: 0 }, 'slow');
+    
+};
+//indo para o final da tabela(chat)
+function goToDown() {
+    setTimeout(function () {
+        location.href = "#ancoraBot";
+    }, 500)
 };
 
 //setar o focus no input chat
